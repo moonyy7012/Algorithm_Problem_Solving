@@ -1,54 +1,40 @@
+//https://programmers.co.kr/learn/courses/30/lessons/60057
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <iostream>
-
 using namespace std;
 
 int solution(string s) {
-    int answer = 0;
-    int len=s.length();
-    if(len==1) return 1;
-    int mid=len/2;
-    vector<int> leng(mid+1,0);
-    leng[0]=1001;
-    for(int i=1; i<=mid; i++){
-        vector<string> comp;
-        vector<int> cnt;
-        for(int j=0; j<len; j+=i){
-            string a="";
-            for(int k=j; k<j+i; k++)
-                if(k<len)a+=s[k];
+	int answer = 10000;
 
-            if(comp.size()>0){
-                if(a==comp[comp.size()-1])
-                    cnt[cnt.size()-1]++;
-                else{
-                    comp.push_back(a);
-                    cnt.push_back(1);
-                }
-            }
-            else{
-                comp.push_back(a);
-                cnt.push_back(1);
-            }
-        }
-        for(int j=0, len3=comp.size(); j<len3; j++){
-            int p=1, n=0;
-            if(cnt[j]!=1){
-                while(1){
-                    if(cnt[j]/p) n++;
-                    else break;
-                    p*=10;
-                }
-            }
-            leng[i]+=(comp[j].length()+n);
-        }
-    }
+	int len = s.length();
+	int mid = len / 2;
+	if (len == 1) return 1;
+	for (int u_len = 1; u_len <= mid; u_len++) {
+		int comp_len = 0;
+		vector<string> unit;
+		vector<int> cnt;
+		for (int i = 0; i < len; i += u_len) {
+			string temp = "";
+			for (int j = i; j < i + u_len; j++) {
+				if (j >= s.length()) break;
+				temp += s[j];
+			}
+			if (unit.empty()) { unit.push_back(temp); cnt.push_back(1); continue; }
+			if (unit[unit.size() - 1] == temp)cnt[cnt.size() - 1]++;
+			else {
+				unit.push_back(temp);
+				cnt.push_back(1);
+			}
+		}
+		for (int i = 0; i < unit.size(); i++) {
+			if (1 < cnt[i] && cnt[i] < 10) comp_len += 1;
+			else if (10 <= cnt[i] && cnt[i] < 100) comp_len += 2;
+			else if (100 <= cnt[i] && cnt[i] < 1000) comp_len += 3;
+			else if (cnt[i] == 1000) comp_len += 4;
 
-
-    answer=*min_element(leng.begin(), leng.end());
-
-
-    return answer;
+			comp_len += unit[i].length();
+		}
+		answer = min(answer, comp_len);
+	}
+	return answer;
 }
