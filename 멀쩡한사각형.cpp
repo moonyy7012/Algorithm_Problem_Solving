@@ -1,4 +1,5 @@
 using namespace std;
+//y=(-h/w)*x+h;
 
 long long solution(int w,int h) {
     long long answer = 1;
