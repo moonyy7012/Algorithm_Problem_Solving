@@ -1,31 +1,28 @@
 #include <string>
 #include <vector>
 #include <queue>
+
 using namespace std;
-// (ì •ë ¬ ê¸°ëŠ¥ì´ ë“¤ì–´ê°„ í)ìš°ì„ ìˆœìœ„ íë¥¼ ì´ìš©í•˜ì—¬ í•´ê²°.
-// ìš°ì„ ìˆœìœ„ íëŠ” min heapê³¼ max heapì´ ìˆì–´ ë°ì´í„°ë¥¼ ë„£ìœ¼ë©´ ìë™ìœ¼ë¡œ ì •ë ¬ì´ ë¨.
-//priority_queue<ìë£Œí˜•, êµ¬í˜„ì²´, ë¹„êµì—°ì‚°ì> 
-// ìš°ì„ ìˆœìœ„ íëŠ” ì›ì†Œ í•˜ë‚˜í•˜ë‚˜ ì§ì ‘ ì ‘ê·¼ ëª» í•¨=> .top()ì„ ì´ìš©í•´ì„œë§Œ ì ‘ê·¼ ê°€ëŠ¥.
-
+// (Á¤·Ä ±â´ÉÀÌ µé¾î°£ Å¥)¿ì¼±¼øÀ§ Å¥¸¦ ÀÌ¿ëÇÏ¿© ÇØ°á.
+// ¿ì¼±¼øÀ§ Å¥´Â min heap°ú max heapÀÌ ÀÖ¾î µ¥ÀÌÅÍ¸¦ ³ÖÀ¸¸é ÀÚµ¿À¸·Î Á¤·ÄÀÌ µÊ.
+//priority_queue<ÀÚ·áÇü, ±¸ÇöÃ¼, ºñ±³¿¬»êÀÚ> 
+// ¿ì¼±¼øÀ§ Å¥´Â ¿ø¼Ò ÇÏ³ªÇÏ³ª Á÷Á¢ Á¢±Ù ¸ø ÇÔ=> .top()À» ÀÌ¿ëÇØ¼­¸¸ Á¢±Ù °¡´É.
 int solution(vector<int> scoville, int K) {
-    int answer = 0;
-//     greaterì€ ì˜¤ë¦„ì°¨ìˆœ, lessëŠ” ë‚´ë¦¼ì°¨ìˆœ
-    priority_queue<int, vector<int>, greater<int>> pq;
-    for(int i=0, len=scoville.size(); i<len; i++)
-        pq.push(scoville[i]);
+	int answer = 0;
+	//     greaterÀº ¿À¸§Â÷¼ø, less´Â ³»¸²Â÷¼ø
+	priority_queue<int, vector<int>, greater<int>> pq;
+	for (int i = 0, len = scoville.size(); i < len; i++)
+		pq.push(scoville[i]);
 
-    while(pq.top()<K){
-        if(pq.size()==1) break;
-        int a=pq.top();
-        pq.pop();
-        int b=pq.top();
-        pq.pop();
-        pq.push(a+b*2);
-        answer++;
-    }
+	while (pq.size() > 1 && pq.top() < K) {
+		int a = pq.top();
+		pq.pop();
+		int b = pq.top();
+		pq.pop();
+		pq.push(a + 2 * b);
+		answer++;
+	}
+	if (pq.top() < K) return -1;
 
-    if(pq.size()==1) {
-        if(pq.top()<K) return -1;
-    }
-    return answer;
+	return answer;
 }
