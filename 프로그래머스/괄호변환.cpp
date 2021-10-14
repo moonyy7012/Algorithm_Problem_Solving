@@ -7,7 +7,7 @@ using namespace std;
 pair<string, string> split(string v) {
 	pair<string, string> uv;
 	int idx = 2, cnt_l = 0, cnt_r = 0;
-	//index=2¿¡¼­ºÎÅÍ 2¾¿ ±¸°£À» ´Ã·Á°¡¸é¼­ Ã³À½À¸·Î '('¿Í ')'ÀÇ °¹¼ö°¡ °°Àº ÁöÁ¡À» ÆÇ´ÜÇÏ¿© ³ª´® 
+	//index=2ì—ì„œë¶€í„° 2ì”© êµ¬ê°„ì„ ëŠ˜ë ¤ê°€ë©´ì„œ ì²˜ìŒìœ¼ë¡œ '('ì™€ ')'ì˜ ê°¯ìˆ˜ê°€ ê°™ì€ ì§€ì ì„ íŒë‹¨í•˜ì—¬ ë‚˜ëˆ” 
 	for (int i = idx, len = v.length(); i < len + 1; i += 2) {
 		cnt_l = 0; cnt_r = 0;
 		for (int j = 0; j < i; j++) {
@@ -49,16 +49,16 @@ string reverse(string u) {
 }
 string recursive(string v) {
 	if (v == "") return v;
-	pair<string, string> uv = split(v);  //u,v ·Î ³ª´®
+	pair<string, string> uv = split(v);  //u,v ë¡œ ë‚˜ëˆ”
 
-//u°¡ ¿Ã¹Ù¸¥ °ıÈ£ ¹®ÀÚ¿­ÀÌ¸é ¹®ÀÚ¿­ v¿¡ ´ëÇØ Àç±ÍÇÏ¿© 1´Ü°èºÎÅÍ ¼öÇà ÈÄ °á°ú°ª ºÙ¿© ¹İÈ¯
+//uê°€ ì˜¬ë°”ë¥¸ ê´„í˜¸ ë¬¸ìì—´ì´ë©´ ë¬¸ìì—´ vì— ëŒ€í•´ ì¬ê·€í•˜ì—¬ 1ë‹¨ê³„ë¶€í„° ìˆ˜í–‰ í›„ ê²°ê³¼ê°’ ë¶™ì—¬ ë°˜í™˜
 	if (isCorrect(uv.first)) {
 		string res = uv.first;
 		res += recursive(uv.second);
 		cout << res << " ";
 		return res;
 	}
-	//u°¡ ¿Ã¹Ù¸¥ °ıÈ£ ¹®ÀÚ¿­ ¾Æ´Ò °æ¿ì
+	//uê°€ ì˜¬ë°”ë¥¸ ê´„í˜¸ ë¬¸ìì—´ ì•„ë‹ ê²½ìš°
 	else {
 		string res = "(";
 		res += recursive(uv.second);
